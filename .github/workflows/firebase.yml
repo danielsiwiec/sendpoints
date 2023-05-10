@@ -1,0 +1,20 @@
+name: Deploy to Firebase
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - api/**
+      - web/**
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create SA key
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > $HOME/gcloud.json
+      - run: make build-api && make build-web
+      - name: Deploy Cloud Functions
+        run: export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json && npx firebase-tools deploy --json
