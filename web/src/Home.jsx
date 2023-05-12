@@ -73,7 +73,7 @@ export default class Home extends Component {
 
   onSend() {
 
-    post('https://cors-anywhere.herokuapp.com/https://garmin-waypoints.herokuapp.com/locations', this.state.place).then(({ hash }) => {
+    post('https://garmin-waypoints.herokuapp.com/locations', this.state.place).then(({ hash }) => {
       const payload = {
         id: hash,
         name: this.state.place.name,
