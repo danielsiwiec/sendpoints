@@ -4,9 +4,10 @@ import * as logger from "firebase-functions/logger";
 import Ajv from "ajv";
 import {getFirestore} from "firebase-admin/firestore";
 import {initializeApp} from "firebase-admin/app";
-import * as ua from "universal-analytics";
+import {initializeGtag, gtag} from "gtag-ga";
 
 initializeApp();
+initializeGtag("G-167DG9RQRQ");
 
 const COLLECTION_NAME = "locations";
 
@@ -120,6 +121,6 @@ const handleOptions = async (_req: Request, res: Response) => {
 
 const track = (event: string, source: string) => {
   if (source !== "newrelic") {
-    ua("UA-77110226-1").event("location", event).send();
+    gtag("event", event);
   }
 };
